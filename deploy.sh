@@ -5,15 +5,12 @@ set -e
 case "${TARGET}" in
 "source") 
 	PKGTYPE="src"
-	MD5SUM=$(openssl dgst -md5 $FILE | awk '{print $2}')
 	;;
 "win"*) 
 	PKGTYPE="win"
-	MD5SUM=$(Rscript -e "cat(tools::md5sum('$FILE'))")
 	;;
 "mac"*) 
 	PKGTYPE="mac"
-	MD5SUM=$(Rscript -e "cat(tools::md5sum('$FILE'))")
 	;;
 *)
 	echo "Unexpected target: $TARGET"
@@ -21,6 +18,7 @@ case "${TARGET}" in
 	;;
 esac
 if [ -f "$FILE" ]; then
+	MD5SUM=$(openssl dgst -md5 $FILE | awk '{print $2}')
 	echo "Deploying: $FILE with md5: $MD5SUM"
 else
 	echo "ERROR: file $FILE not found!"
