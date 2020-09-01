@@ -1,0 +1,5 @@
+name: 'Deploy packages'
+description: 'Deploy all the packages'
+runs:
+  using: 'docker'
+  image: 'docker://runiverse/deploy-packages'
