@@ -30,6 +30,7 @@ curl -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
 	-H "Builder-Date: $(date +'%s')" \
 	-H "Builder-Commit: ${REPO_COMMIT}" \
 	-H "Builder-Timestamp: ${COMMIT_TIMESTAMP}" \
+	-H "Builder-MaintainerLogin: ${MAINTAINER_LOGIN}" \
 	-H "Builder-Distro: ${DISTRO}" \
 	-H "Builder-Host: GitHub-Actions" \
 	-H "Builder-Status: ${JOB_STATUS}" \
