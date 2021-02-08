@@ -34,6 +34,7 @@ curl -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
 	-H "Builder-Distro: ${DISTRO}" \
 	-H "Builder-Host: GitHub-Actions" \
 	-H "Builder-Status: ${JOB_STATUS}" \
+	-H "Builder-Vignettes: ${VIGNETTES}" \
 	-H "Builder-Sysdeps: ${SYSDEPS}" \
 	-H "Builder-Pkglogo: ${PKGLOGO}" \
 	-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
