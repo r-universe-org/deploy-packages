@@ -38,7 +38,7 @@ curl -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
 	-H "Builder-Sysdeps: ${SYSDEPS}" \
 	-H "Builder-Pkglogo: ${PKGLOGO}" \
 	-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
-	"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}" \
-	--output out.txt 2>&1 | grep '^[<>]'
-echo " === Success! === "
-cat out.txt && rm -f out.txt
+  -H 'Expect:' \
+	"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}"
+
+echo " === Complete! === "
