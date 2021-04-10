@@ -29,6 +29,7 @@ curl -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
 	-H "Builder-Upstream: ${REPO_URL}" \
 	-H "Builder-Date: $(date +'%s')" \
 	-H "Builder-Commit: ${REPO_COMMIT}" \
+	-H "Builder-Registered: ${REPO_REGISTERED}" \
 	-H "Builder-Timestamp: ${COMMIT_TIMESTAMP}" \
 	-H "Builder-MaintainerLogin: ${MAINTAINER_LOGIN}" \
 	-H "Builder-Distro: ${DISTRO}" \
