@@ -2,9 +2,9 @@
 set -e
 ls -ltr
 for dir in package-*; do
-	echo " === DEPLOYING ${dir} ==="
-    (cd "${dir}"; eval $(cat pkgdata.txt) /deploy.sh)
-    echo " === DONE! ==="
+  echo "::group::DEPLOYING ${dir}"
+  (cd "${dir}"; eval $(cat pkgdata.txt) /deploy.sh)
+  echo "::endgroup::"
 done
 
 DEPLOYED_PACKAGES=$(echo package-*)
