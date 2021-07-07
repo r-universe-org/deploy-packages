@@ -25,7 +25,7 @@ else
 	exit 1
 fi
 
-curl --no-keepalive --max-time 60 -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
+curl --no-keepalive --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
 	-H "Builder-Upstream: ${REPO_URL}" \
 	-H "Builder-Date: $(date +'%s')" \
 	-H "Builder-Commit: ${REPO_COMMIT}" \
