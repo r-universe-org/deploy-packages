@@ -13,7 +13,13 @@ echo "DEPLOYED_PACKAGES: ${DEPLOYED_PACKAGES}"
 echo ::set-output name=deployed_packages::$DEPLOYED_PACKAGES
 
 # Deploy docs
-if [ -d "docs-website" ]; then;
-  cd docs-website; unzip docs.zip; rm docs.zip
+if [ -d "docs-website" ]; then
+  echo "Found docs-website"
+  cd docs-website
+  ls -ltr
+  unzip docs.zip 
+  rm docs.zip
   cat */info.json
 fi
+
+exit 0
