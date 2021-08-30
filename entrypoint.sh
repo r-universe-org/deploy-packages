@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-ls -ltr
+ls -lR
 for dir in package-*; do
   echo "::group::DEPLOYING ${dir}"
   (cd "${dir}"; eval $(cat pkgdata.txt) /deploy.sh)
