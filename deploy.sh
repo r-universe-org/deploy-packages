@@ -38,6 +38,7 @@ curl --no-keepalive --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail -
 	-H "Builder-Vignettes: ${VIGNETTES}" \
 	-H "Builder-Sysdeps: ${SYSDEPS}" \
 	-H "Builder-Pkglogo: ${PKGLOGO}" \
+	-H "Builder-Pkgdocs: ${PKGDOCS}" \
 	-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
   -H 'Expect:' \
 	"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}"
