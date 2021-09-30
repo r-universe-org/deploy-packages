@@ -12,8 +12,8 @@ case "${TARGET}" in
 "mac"*) 
 	PKGTYPE="mac"
 	;;
-"fail")
-	PKGTYPE="fail"
+"failure")
+	PKGTYPE="failure"
 	;;
 *)
 	echo "Unexpected target: $TARGET"
@@ -21,8 +21,8 @@ case "${TARGET}" in
 	;;
 esac
 
-if [ "$PKGTYPE" == "fail" ]; then
-  echo "Posting a build-fail message for $PACKAGE to the package server!"
+if [ "$PKGTYPE" == "failure" ]; then
+  echo "Posting a build-failure for $PACKAGE to the package server!"
 	curl -X POST --no-keepalive --max-time 60 --retry 3 -vL --fail -u "${CRANLIKEPWD}" \
 		-H "Builder-Upstream: ${REPO_URL}" \
 		-H "Builder-Date: $(date +'%s')" \
