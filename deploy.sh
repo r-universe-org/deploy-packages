@@ -12,11 +12,32 @@ case "${TARGET}" in
 "mac"*) 
 	PKGTYPE="mac"
 	;;
+"fail")
+	PKGTYPE="fail"
+	;;
 *)
 	echo "Unexpected target: $TARGET"
 	exit 1
 	;;
 esac
+
+if [ "$PKGTYPE" == "fail" ]; then
+  echo "Posting a build-fail message for $PACKAGE to the package server!"
+	curl -X POST --no-keepalive --max-time 60 --retry 3 -vL --fail -u "${CRANLIKEPWD}" \
+		-H "Builder-Upstream: ${REPO_URL}" \
+		-H "Builder-Date: $(date +'%s')" \
+		-H "Builder-Commit: ${REPO_COMMIT}" \
+		-H "Builder-Registered: ${REPO_REGISTERED}" \
+		-H "Builder-Timestamp: ${COMMIT_TIMESTAMP}" \
+		-H "Builder-MaintainerLogin: ${MAINTAINER_LOGIN}" \
+		-H "Builder-Maintainer: ${MAINTAINER}" \
+		-H "Builder-Distro: ${DISTRO}" \
+		-H "Builder-Host: GitHub-Actions" \
+		-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}"
+	exit 0;
+fi
+
 if [ -f "$FILE" ]; then
 	MD5SUM=$(openssl dgst -md5 $FILE | awk '{print $2}')
 	echo "Deploying: $FILE with md5: $MD5SUM"
