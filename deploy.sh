@@ -23,7 +23,7 @@ esac
 
 if [ "$PKGTYPE" == "failure" ]; then
   echo "Posting a build-failure for $PACKAGE to the package server!"
-	curl -X POST --no-keepalive --max-time 60 --retry 3 -vL --fail -u "${CRANLIKEPWD}" \
+	curl --no-keepalive --max-time 60 --retry 3 -vL --fail -u "${CRANLIKEPWD}" \
 		-d "Builder-Upstream=${REPO_URL}" \
 		-d "Builder-Date=$(date +'%s')" \
 		-d "Builder-Commit=${REPO_COMMIT}" \
