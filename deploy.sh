@@ -24,16 +24,16 @@ esac
 if [ "$PKGTYPE" == "failure" ]; then
   echo "Posting a build-failure for $PACKAGE to the package server!"
 	curl -X POST --no-keepalive --max-time 60 --retry 3 -vL --fail -u "${CRANLIKEPWD}" \
-		-H "Builder-Upstream: ${REPO_URL}" \
-		-H "Builder-Date: $(date +'%s')" \
-		-H "Builder-Commit: ${REPO_COMMIT}" \
-		-H "Builder-Registered: ${REPO_REGISTERED}" \
-		-H "Builder-Timestamp: ${COMMIT_TIMESTAMP}" \
-		-H "Builder-MaintainerLogin: ${MAINTAINER_LOGIN}" \
-		-H "Builder-Maintainer: ${MAINTAINER}" \
-		-H "Builder-Distro: ${DISTRO}" \
-		-H "Builder-Host: GitHub-Actions" \
-		-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+		-d "Builder-Upstream=${REPO_URL}" \
+		-d "Builder-Date=$(date +'%s')" \
+		-d "Builder-Commit=${REPO_COMMIT}" \
+		-d "Builder-Registered=${REPO_REGISTERED}" \
+		-d "Builder-Timestamp=${COMMIT_TIMESTAMP}" \
+		-d "Builder-MaintainerLogin=${MAINTAINER_LOGIN}" \
+		-d "Builder-Maintainer=${MAINTAINER}" \
+		-d "Builder-Distro=${DISTRO}" \
+		-d "Builder-Host=GitHub-Actions" \
+		-d "Builder-Url=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
 		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}"
 	exit 0;
 fi
