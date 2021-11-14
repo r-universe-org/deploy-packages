@@ -29,6 +29,7 @@ if [ "$PKGTYPE" == "failure" ]; then
 		-d "Builder-Commit=${REPO_COMMIT}" \
 		-d "Builder-Registered=${REPO_REGISTERED}" \
 		-d "Builder-Timestamp=${COMMIT_TIMESTAMP}" \
+		-d "Builder-CommitInfo=${COMMITINFO}" \
 		-d "Builder-MaintainerLogin=${MAINTAINER_LOGIN}" \
 		-d "Builder-Maintainer=${MAINTAINER}" \
 		-d "Builder-Distro=${DISTRO}" \
