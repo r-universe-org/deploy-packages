@@ -26,10 +26,9 @@ if [ "$PKGTYPE" == "failure" ]; then
 	curl --no-keepalive --max-time 60 --retry 3 -vL --fail -u "${CRANLIKEPWD}" \
 		-d "Builder-Upstream=${REPO_URL}" \
 		-d "Builder-Date=$(date +'%s')" \
-		-d "Builder-Commit=${REPO_COMMIT}" \
 		-d "Builder-Registered=${REPO_REGISTERED}" \
 		-d "Builder-Timestamp=${COMMIT_TIMESTAMP}" \
-		-d "Builder-CommitInfo=${COMMITINFO}" \
+		-d "Builder-Commit=${COMMITINFO}" \
 		-d "Builder-MaintainerLogin=${MAINTAINER_LOGIN}" \
 		-d "Builder-Maintainer=${MAINTAINER}" \
 		-d "Builder-Distro=${DISTRO}" \
@@ -50,10 +49,9 @@ fi
 curl --no-keepalive --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
 	-H "Builder-Upstream: ${REPO_URL}" \
 	-H "Builder-Date: $(date +'%s')" \
-	-H "Builder-Commit: ${REPO_COMMIT}" \
 	-H "Builder-Registered: ${REPO_REGISTERED}" \
 	-H "Builder-Timestamp: ${COMMIT_TIMESTAMP}" \
-	-H "Builder-CommitInfo: ${COMMITINFO}" \
+	-H "Builder-Commit: ${COMMITINFO}" \
 	-H "Builder-MaintainerLogin: ${MAINTAINER_LOGIN}" \
 	-H "Builder-Distro: ${DISTRO}" \
 	-H "Builder-Host: GitHub-Actions" \
