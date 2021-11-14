@@ -53,6 +53,7 @@ curl --no-keepalive --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail -
 	-H "Builder-Commit: ${REPO_COMMIT}" \
 	-H "Builder-Registered: ${REPO_REGISTERED}" \
 	-H "Builder-Timestamp: ${COMMIT_TIMESTAMP}" \
+	-H "Builder-CommitInfo: ${COMMITINFO}" \
 	-H "Builder-MaintainerLogin: ${MAINTAINER_LOGIN}" \
 	-H "Builder-Distro: ${DISTRO}" \
 	-H "Builder-Host: GitHub-Actions" \
