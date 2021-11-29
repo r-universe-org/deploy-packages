@@ -29,8 +29,8 @@ if [ "$PKGTYPE" == "failure" ]; then
 		-d "Builder-Registered=${REPO_REGISTERED}" \
 		-d "Builder-Timestamp=${COMMIT_TIMESTAMP}" \
 		-d "Builder-Commit=${COMMITINFO}" \
+		-d "Builder-Maintainer=${MAINTAINERINFO}" \
 		-d "Builder-MaintainerLogin=${MAINTAINER_LOGIN}" \
-		-d "Builder-Maintainer=${MAINTAINER}" \
 		-d "Builder-Distro=${DISTRO}" \
 		-d "Builder-Host=GitHub-Actions" \
 		-d "Builder-Url=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
@@ -52,6 +52,7 @@ curl --no-keepalive --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail -
 	-H "Builder-Registered: ${REPO_REGISTERED}" \
 	-H "Builder-Timestamp: ${COMMIT_TIMESTAMP}" \
 	-H "Builder-Commit: ${COMMITINFO}" \
+	-H "Builder-Maintainer: ${MAINTAINERINFO}" \
 	-H "Builder-MaintainerLogin: ${MAINTAINER_LOGIN}" \
 	-H "Builder-Distro: ${DISTRO}" \
 	-H "Builder-Host: GitHub-Actions" \
