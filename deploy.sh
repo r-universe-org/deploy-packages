@@ -26,9 +26,7 @@ if [ "$PKGTYPE" == "failure" ]; then
   echo "MAINTAINERINFO: $MAINTAINERINFO"
 	curl --no-keepalive --max-time 60 --retry 3 -vL --fail -u "${CRANLIKEPWD}" \
 		-d "Builder-Upstream=${REPO_URL}" \
-		-d "Builder-Date=$(date +'%s')" \
 		-d "Builder-Registered=${REPO_REGISTERED}" \
-		-d "Builder-Timestamp=${COMMIT_TIMESTAMP}" \
 		-d "Builder-Commit=${COMMITINFO}" \
 		-d "Builder-Maintainer=${MAINTAINERINFO}" \
 		-d "Builder-Distro=${DISTRO}" \
@@ -48,9 +46,7 @@ fi
 
 curl --no-keepalive --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
 	-H "Builder-Upstream: ${REPO_URL}" \
-	-H "Builder-Date: $(date +'%s')" \
 	-H "Builder-Registered: ${REPO_REGISTERED}" \
-	-H "Builder-Timestamp: ${COMMIT_TIMESTAMP}" \
 	-H "Builder-Commit: ${COMMITINFO}" \
 	-H "Builder-Maintainer: ${MAINTAINERINFO}" \
 	-H "Builder-Distro: ${DISTRO}" \
