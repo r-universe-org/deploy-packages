@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:impish
 
 ENV DEBIAN_FRONTEND noninteractive
 
