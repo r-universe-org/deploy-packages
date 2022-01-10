@@ -44,7 +44,7 @@ else
 	exit 1
 fi
 
-curl --no-keepalive --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
+curl --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
 	-H "Builder-Upstream: ${REPO_URL}" \
 	-H "Builder-Registered: ${REPO_REGISTERED}" \
 	-H "Builder-Commit: ${COMMITINFO}" \
