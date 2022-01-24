@@ -4,12 +4,16 @@ ls -lR
 
 trap 'catch $? $LINENO' EXIT
 catch() {
-  echo "Run URL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+  local SLACKAPI="https://ropensci.slack.com/api/chat.postMessage"
+  local RUNURL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
   if [ "$1" != "0" ]; then
-    echo "Error $1 in line $2"
+    local STATUS=FAIL
   else
-    echo "All done and well"
+    local STATUS=OK
   fi
+  echo "::group::Post status to slack"
+  curl -d "text=Deploy $STATUS: $RUNURL" -d "channel=deployments" -H "Authorization: Bearer $SLACK_TOKEN" $SLACKAPI
+  echo "::endgroup::"
 }
 
 # Upload source first
