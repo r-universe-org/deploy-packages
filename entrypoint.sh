@@ -2,11 +2,16 @@
 set -e
 ls -lR
 
+# Upload source first
+mv package-source package-00source
+
 for dir in package-*; do
   echo "::group::DEPLOYING ${dir}"
   (cd "${dir}"; eval $(cat pkgdata.txt) /deploy.sh)
   echo "::endgroup::"
 done
+
+mv package-00source package-source
 
 DEPLOYED_PACKAGES=$(echo package-*)
 echo "DEPLOYED_PACKAGES: ${DEPLOYED_PACKAGES}"
