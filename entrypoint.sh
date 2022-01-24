@@ -2,6 +2,16 @@
 set -e
 ls -lR
 
+trap 'catch $? $LINENO' EXIT
+catch() {
+  echo "Run URL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+  if [ "$1" != "0" ]; then
+    echo "Error $1 in line $2"
+  else
+    echo "All done and well"
+  fi
+}
+
 # Upload source first
 mv package-source package-00source
 
