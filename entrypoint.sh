@@ -12,7 +12,7 @@ catch() {
     local STATUS=OK
   fi
   echo "::group::Post status to slack"
-  curl -d "text=Deploy $STATUS: $RUNURL" -d "channel=deployments" -H "Authorization: Bearer $SLACK_TOKEN" $SLACKAPI
+  curl -sS -d $SLACKAPI "text=Deploy $STATUS: $RUNURL" -d "channel=deployments" -H "Authorization: Bearer $SLACK_TOKEN"
   echo "::endgroup::"
 }
 
