@@ -24,7 +24,7 @@ esac
 if [ "$PKGTYPE" == "failure" ]; then
   echo "Posting a build-failure for $PACKAGE to the package server!"
   echo "MAINTAINERINFO: $MAINTAINERINFO"
-	curl --no-keepalive --max-time 60 --retry 3 -vL --fail -u "${CRANLIKEPWD}" \
+	curl --http1.1 --no-keepalive --max-time 60 --retry 3 -vL --fail -u "${CRANLIKEPWD}" \
 		-d "Builder-Upstream=${REPO_URL}" \
 		-d "Builder-Registered=${REPO_REGISTERED}" \
 		-d "Builder-Commit=${COMMITINFO}" \
@@ -44,7 +44,7 @@ else
 	exit 1
 fi
 
-curl --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
+curl --http1.1 --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPWD}" \
 	-H "Builder-Upstream: ${REPO_URL}" \
 	-H "Builder-Registered: ${REPO_REGISTERED}" \
 	-H "Builder-Commit: ${COMMITINFO}" \
@@ -57,6 +57,7 @@ curl --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail -u "${CRANLIKEPW
 	-H "Builder-Pkglogo: ${PKGLOGO}" \
 	-H "Builder-Pkgdocs: ${PKGDOCS}" \
 	-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+  -H 'Expect:' \
 	"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}"
 
 echo " === Complete! === "
