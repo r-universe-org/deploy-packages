@@ -10,7 +10,7 @@ catch() {
     local STATUS=FAIL
   else
     local STATUS=OK
-    return # only post failures now
+    #return # only post failures now
   fi
   echo "::group::Post status to slack"
   curl -sS $SLACKAPI -d "text=Deploy $STATUS: $RUNURL" -d "channel=deployments" -H "Authorization: Bearer $SLACK_TOKEN"
