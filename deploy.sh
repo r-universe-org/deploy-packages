@@ -44,20 +44,32 @@ else
 	exit 1
 fi
 
-curl --http1.1 --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail-with-body -u "${CRANLIKEPWD}" \
-	-H "Builder-Upstream: ${REPO_URL}" \
-	-H "Builder-Registered: ${REPO_REGISTERED}" \
-	-H "Builder-Commit: ${COMMITINFO}" \
-	-H "Builder-Maintainer: ${MAINTAINERINFO}" \
-	-H "Builder-Distro: ${DISTRO}" \
-	-H "Builder-Host: GitHub-Actions" \
-	-H "Builder-Status: ${JOB_STATUS}" \
-	-H "Builder-Vignettes: ${VIGNETTES}" \
-	-H "Builder-Sysdeps: ${SYSDEPS}" \
-	-H "Builder-Pkglogo: ${PKGLOGO}" \
-	-H "Builder-Pkgdocs: ${PKGDOCS}" \
-	-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
-	-H 'Expect:' \
-	"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}"
+upload_package_file(){
+	curl --http1.1 --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail-with-body -u "${CRANLIKEPWD}" \
+		-H "Builder-Upstream: ${REPO_URL}" \
+		-H "Builder-Registered: ${REPO_REGISTERED}" \
+		-H "Builder-Commit: ${COMMITINFO}" \
+		-H "Builder-Maintainer: ${MAINTAINERINFO}" \
+		-H "Builder-Distro: ${DISTRO}" \
+		-H "Builder-Host: GitHub-Actions" \
+		-H "Builder-Status: ${JOB_STATUS}" \
+		-H "Builder-Vignettes: ${VIGNETTES}" \
+		-H "Builder-Sysdeps: ${SYSDEPS}" \
+		-H "Builder-Pkglogo: ${PKGLOGO}" \
+		-H "Builder-Pkgdocs: ${PKGDOCS}" \
+		-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+		-H 'Expect:' \
+		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}" &&\
+  echo " === Complete! === " &&\
+  exit 0
+}
 
-echo " === Complete! === "
+# Sometimes deploys randomly drop a connection (server restart?)
+# Retry 3 times (curl --retry does not always work)
+for x in 1 2 3; do
+	upload_package_file || echo "Something went wrong. Waiting 10 seconds to retry..."
+	sleep 10
+done
+
+echo "Package deploy failed"
+exit 1
