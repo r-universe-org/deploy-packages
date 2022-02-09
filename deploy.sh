@@ -54,6 +54,7 @@ upload_package_file(){
 		-H "Builder-Host: GitHub-Actions" \
 		-H "Builder-Status: ${JOB_STATUS}" \
 		-H "Builder-Vignettes: ${VIGNETTES}" \
+		-H "Builder-Gitstats: ${GITSTATS}" \
 		-H "Builder-Sysdeps: ${SYSDEPS}" \
 		-H "Builder-Pkglogo: ${PKGLOGO}" \
 		-H "Builder-Pkgdocs: ${PKGDOCS}" \
