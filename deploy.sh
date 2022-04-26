@@ -56,6 +56,7 @@ upload_package_file(){
 		-H "Builder-Vignettes: ${VIGNETTES}" \
 		-H "Builder-Gitstats: ${GITSTATS}" \
 		-H "Builder-Sysdeps: ${SYSDEPS}" \
+		-H "Builder-Rundeps: ${RUNDEPS}" \
 		-H "Builder-Pkglogo: ${PKGLOGO}" \
 		-H "Builder-Pkgdocs: ${PKGDOCS}" \
 		-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
