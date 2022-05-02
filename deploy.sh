@@ -55,6 +55,7 @@ upload_package_file(){
 		-H "Builder-Status: ${JOB_STATUS}" \
 		-H "Builder-Vignettes: ${VIGNETTES}" \
 		-H "Builder-Gitstats: ${GITSTATS}" \
+		-H "Builder-Assets: ${ASSETS}" \
 		-H "Builder-Sysdeps: ${SYSDEPS}" \
 		-H "Builder-Rundeps: ${RUNDEPS}" \
 		-H "Builder-Pkglogo: ${PKGLOGO}" \
