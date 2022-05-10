@@ -59,6 +59,7 @@ upload_package_file(){
 		-H "Builder-Sysdeps: ${SYSDEPS}" \
 		-H "Builder-Rundeps: ${RUNDEPS}" \
 		-H "Builder-Pkglogo: ${PKGLOGO}" \
+		-H "Builder-Readme: ${README}" \
 		-H "Builder-Pkgdocs: ${PKGDOCS}" \
 		-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
 		-H 'Expect:' \
