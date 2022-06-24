@@ -48,9 +48,13 @@ fi
 if [ "$PKGTYPE" == "src" ]; then
 if [ -d "../package-macos-release" ]; then
 MACOS_BINARY_STATUS=$(cd ../package-macos-release; (source pkgdata.txt; echo "$JOB_STATUS"))
+else
+MACOS_BINARY_STATUS="none"
 fi
 if [ -d "../package-windows-release" ]; then
 WINDOWS_BINARY_STATUS=$(cd ../package-windows-release; (source pkgdata.txt; echo "$JOB_STATUS"))
+else
+WINDOWS_BINARY_STATUS="none"
 fi
 fi
 
