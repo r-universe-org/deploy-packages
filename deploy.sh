@@ -44,6 +44,16 @@ else
 	exit 1
 fi
 
+# Add status for binaries to source deploy
+if [ "$PKGTYPE" == "src" ]; then
+if [ -d "../package-macos-release" ]; then
+MACOS_BINARY_STATUS=$(cd ../package-macos-release; (source pkgdata.txt; echo "$JOB_STATUS"))
+fi
+if [ -d "../package-windows-release" ]; then
+WINDOWS_BINARY_STATUS=$(cd ../package-windows-release; (source pkgdata.txt; echo "$JOB_STATUS"))
+fi
+fi
+
 upload_package_file(){
 	curl --http1.1 --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail-with-body -u "${CRANLIKEPWD}" \
 		-H "Builder-Upstream: ${REPO_URL}" \
@@ -61,6 +71,8 @@ upload_package_file(){
 		-H "Builder-Pkglogo: ${PKGLOGO}" \
 		-H "Builder-Readme: ${README}" \
 		-H "Builder-Pkgdocs: ${PKGDOCS}" \
+		-H "Builder-Winbinary: ${MACOS_BINARY_STATUS}" \
+		-H "Builder-Macbinary: ${WINDOWS_BINARY_STATUS}" \
 		-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
 		-H 'Expect:' \
 		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}" &&\
