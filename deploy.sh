@@ -75,8 +75,8 @@ upload_package_file(){
 		-H "Builder-Pkglogo: ${PKGLOGO}" \
 		-H "Builder-Readme: ${README}" \
 		-H "Builder-Pkgdocs: ${PKGDOCS}" \
-		-H "Builder-Winbinary: ${MACOS_BINARY_STATUS}" \
-		-H "Builder-Macbinary: ${WINDOWS_BINARY_STATUS}" \
+		-H "Builder-Winbinary: ${WINDOWS_BINARY_STATUS}" \
+		-H "Builder-Macbinary: ${MACOS_BINARY_STATUS}" \
 		-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
 		-H 'Expect:' \
 		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}" &&\
