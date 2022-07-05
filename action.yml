@@ -2,7 +2,7 @@ name: 'Deploy packages'
 description: 'Deploy all the packages'
 runs:
   using: 'docker'
-  image: 'docker://runiverse/deploy-packages'
+  image: 'docker://ghcr.io/r-universe-org/deploy-packages'
 outputs:
   deployed_packages:
     description: 'String with uploaded binaries'
