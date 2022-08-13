@@ -22,7 +22,7 @@ mv package-source package-00source
 
 for dir in package-*; do
   echo "::group::DEPLOYING ${dir}"
-  (cd "${dir}"; eval $(cat pkgdata.txt) /deploy.sh)
+  (cd "${dir}"; eval $(cat pkgdata.txt) /deploy.sh) || FAILURE=1
   echo "::endgroup::"
 done
 
@@ -32,4 +32,8 @@ DEPLOYED_PACKAGES=$(echo package-*)
 echo "DEPLOYED_PACKAGES: ${DEPLOYED_PACKAGES}"
 echo ::set-output name=deployed_packages::$DEPLOYED_PACKAGES
 
-exit 0
+if [ "$FAILURE" ]; then
+  exit 1
+else
+  exit 0
+fi
