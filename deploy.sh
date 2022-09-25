@@ -24,7 +24,7 @@ esac
 if [ "$PKGTYPE" == "failure" ]; then
   echo "Posting a build-failure for $PACKAGE to the package server!"
   echo "MAINTAINERINFO: $MAINTAINERINFO"
-	curl --http1.1 --no-keepalive --max-time 60 --retry 3 -vL --fail-with-body -u "${CRANLIKEPWD}" \
+	curl --max-time 60 --retry 3 -vL --fail-with-body -u "${CRANLIKEPWD}" \
 		-d "Builder-Upstream=${REPO_URL}" \
 		-d "Builder-Registered=${REPO_REGISTERED}" \
 		-d "Builder-Commit=${COMMITINFO}" \
@@ -59,7 +59,7 @@ fi
 fi
 
 upload_package_file(){
-	curl --http1.1 --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail-with-body -u "${CRANLIKEPWD}" \
+	curl --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail-with-body -u "${CRANLIKEPWD}" \
 		-H "Builder-Upstream: ${REPO_URL}" \
 		-H "Builder-Registered: ${REPO_REGISTERED}" \
 		-H "Builder-Commit: ${COMMITINFO}" \
@@ -67,13 +67,6 @@ upload_package_file(){
 		-H "Builder-Distro: ${DISTRO}" \
 		-H "Builder-Host: GitHub-Actions" \
 		-H "Builder-Status: ${JOB_STATUS}" \
-		-H "Builder-Vignettes: ${VIGNETTES}" \
-		-H "Builder-Gitstats: ${GITSTATS}" \
-		-H "Builder-Assets: ${ASSETS}" \
-		-H "Builder-Sysdeps: ${SYSDEPS}" \
-		-H "Builder-Rundeps: ${RUNDEPS}" \
-		-H "Builder-Pkglogo: ${PKGLOGO}" \
-		-H "Builder-Readme: ${README}" \
 		-H "Builder-Pkgdocs: ${PKGDOCS}" \
 		-H "Builder-Winbinary: ${WINDOWS_BINARY_STATUS}" \
 		-H "Builder-Macbinary: ${MACOS_BINARY_STATUS}" \
