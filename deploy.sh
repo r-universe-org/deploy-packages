@@ -59,7 +59,7 @@ fi
 fi
 
 upload_package_file(){
-	curl --max-time 60 --retry 3 -vL --upload-file "${FILE}" --fail-with-body -u "${CRANLIKEPWD}" \
+	curl --max-time 60 --retry 3 -L --upload-file "${FILE}" --fail-with-body -u "${CRANLIKEPWD}" \
 		-H "Builder-Upstream: ${REPO_URL}" \
 		-H "Builder-Registered: ${REPO_REGISTERED}" \
 		-H "Builder-Commit: ${COMMITINFO}" \
