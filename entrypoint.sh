@@ -29,7 +29,7 @@ done
 mv package-00source package-source
 
 DEPLOYED_PACKAGES=$(echo package-*)
-echo "DEPLOYED_PACKAGES: ${DEPLOYED_PACKAGES}"
+echo "DEPLOYED_PACKAGES=${DEPLOYED_PACKAGES}" >> $GITHUB_OUTPUT
 echo ::set-output name=deployed_packages::$DEPLOYED_PACKAGES
 
 if [ "$FAILURE" ]; then
