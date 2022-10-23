@@ -12,6 +12,9 @@ case "${TARGET}" in
 "mac"*) 
 	PKGTYPE="mac"
 	;;
+"linux"*)
+	PKGTYPE="linux"
+	;;
 "failure")
 	PKGTYPE="failure"
 	;;
