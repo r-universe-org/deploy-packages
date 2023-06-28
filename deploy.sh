@@ -51,11 +51,15 @@ fi
 if [ "$PKGTYPE" == "src" ]; then
 if [ -d "../package-macos-release" ]; then
 MACOS_BINARY_STATUS=$(cd ../package-macos-release; (source pkgdata.txt; echo "$JOB_STATUS"))
+elif [ "$SKIP_BINARIES" ]; then
+MACOS_BINARY_STATUS="skipped"
 else
 MACOS_BINARY_STATUS="none"
 fi
 if [ -d "../package-windows-release" ]; then
 WINDOWS_BINARY_STATUS=$(cd ../package-windows-release; (source pkgdata.txt; echo "$JOB_STATUS"))
+elif [ "$SKIP_BINARIES" ]; then
+WINDOWS_BINARY_STATUS="skipped"
 else
 WINDOWS_BINARY_STATUS="none"
 fi
