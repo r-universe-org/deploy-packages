@@ -35,6 +35,7 @@ if [ "$PKGTYPE" == "failure" ]; then
 		-d "Builder-Distro=${DISTRO}" \
 		-d "Builder-Host=GitHub-Actions" \
 		-d "Builder-Url=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+		-d "Builder-Buildurl=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
 		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}"
 	exit 0;
 fi
@@ -79,6 +80,7 @@ upload_package_file(){
 		-H "Builder-Winbinary: ${WINDOWS_BINARY_STATUS}" \
 		-H "Builder-Macbinary: ${MACOS_BINARY_STATUS}" \
 		-H "Builder-Url: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+		-H "Builder-Buildurl: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
 		-H 'Expect:' \
 		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}" &&\
   echo " === Complete! === " &&\
