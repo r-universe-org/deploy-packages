@@ -15,6 +15,9 @@ case "${TARGET}" in
 "linux"*)
 	PKGTYPE="linux"
 	;;
+"wasm")
+	PKGTYPE="wasm"
+	;;
 "failure")
 	PKGTYPE="failure"
 	;;
