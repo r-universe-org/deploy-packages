@@ -66,6 +66,11 @@ WINDOWS_BINARY_STATUS="skipped"
 else
 WINDOWS_BINARY_STATUS="none"
 fi
+if [ -d "../package-wasm-release" ]; then
+WASM_BINARY_STATUS=$(cd ../package-wasm-release; (source pkgdata.txt; echo "$JOB_STATUS"))
+else
+WASM_BINARY_STATUS="none"
+fi
 fi
 
 upload_package_file(){
@@ -81,6 +86,7 @@ upload_package_file(){
 		-H "Builder-Srconly: ${SKIP_BINARIES}" \
 		-H "Builder-Winbinary: ${WINDOWS_BINARY_STATUS}" \
 		-H "Builder-Macbinary: ${MACOS_BINARY_STATUS}" \
+		-H "Builder-Wasmbinary: ${WASM_BINARY_STATUS}" \
 		-H "Builder-Buildurl: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
 		-H 'Expect:' \
 		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}" &&\
