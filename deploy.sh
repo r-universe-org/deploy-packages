@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+if [ -z "$COMMITINFO" ]; then
+	echo "Missing COMMITINFO"; exit 1
+fi
+if [ -z "$MAINTAINERINFO" ]; then
+	echo "Missing MAINTAINERINFO"; exit 1
+fi
+
 # What are we deploying
 case "${TARGET}" in
 "source") 
