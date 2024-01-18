@@ -80,6 +80,14 @@ WASM_BINARY_STATUS="none"
 fi
 fi
 
+# Override status for missing cross binaries
+if [ "$PKGTYPE" == "src" ] && [ -d "../package-macos-release" ] && [ ! -d "../package-macos-release-arm64" ]; then
+if tar -xOf ../package-macos-release/${PACKAGE}_*.tgz "${PACKAGE}/DESCRIPTION" | grep -q '^Built.*x86_64'; then
+echo "Package is missing arm64 macos binary!"
+MACOS_BINARY_STATUS="arm64-failure"
+fi
+fi
+
 upload_package_file(){
 	curl --max-time 60 --retry 3 -L --upload-file "${FILE}" --fail-with-body -u "${CRANLIKEPWD}" \
 		-H "Builder-Upstream: ${REPO_URL}" \
