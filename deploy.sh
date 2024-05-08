@@ -66,6 +66,13 @@ MACOS_BINARY_STATUS="skipped"
 else
 MACOS_BINARY_STATUS="none"
 fi
+if [ -d "../package-windows-devel" ]; then
+WINDOWS_DEVEL_STATUS=$(cd ../package-windows-devel; (source pkgdata.txt; echo "$JOB_STATUS"))
+elif [ "$SKIP_BINARIES" ]; then
+WINDOWS_DEVEL_STATUS="skipped"
+else
+WINDOWS_DEVEL_STATUS="none"
+fi
 if [ -d "../package-windows-release" ]; then
 WINDOWS_BINARY_STATUS=$(cd ../package-windows-release; (source pkgdata.txt; echo "$JOB_STATUS"))
 elif [ "$SKIP_BINARIES" ]; then
@@ -108,6 +115,7 @@ upload_package_file(){
 		-H "Builder-Macbinary: ${MACOS_BINARY_STATUS}" \
 		-H "Builder-Wasmbinary: ${WASM_BINARY_STATUS}" \
 		-H "Builder-Linuxdevel: ${LINUX_DEVEL_STATUS}" \
+		-H "Builder-Windevel: ${WINDOWS_DEVEL_STATUS}" \
 		-H "Builder-Buildurl: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
 		-H 'Expect:' \
 		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}" &&\
