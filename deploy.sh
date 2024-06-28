@@ -109,6 +109,7 @@ upload_package_file(){
 		-H "Builder-Distro: ${DISTRO}" \
 		-H "Builder-Host: GitHub-Actions" \
 		-H "Builder-Status: ${JOB_STATUS}" \
+		-H "Builder-Check: ${CHECKSTATUS}" \
 		-H "Builder-Pkgdocs: ${PKGDOCS}" \
 		-H "Builder-Srconly: ${SKIP_BINARIES}" \
 		-H "Builder-Winbinary: ${WINDOWS_BINARY_STATUS}" \
