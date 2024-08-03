@@ -59,13 +59,19 @@ fi
 
 # Add status for binaries to source deploy
 if [ "$PKGTYPE" == "src" ]; then
+
 if [ -d "../package-macos-release" ]; then
-MACOS_BINARY_STATUS=$(cd ../package-macos-release; (source pkgdata.txt; echo "$JOB_STATUS"))
+MACOS_BINARY_STATUS=$(cd ../package-macos-release; (source pkgdata.txt; echo "$JOB_STATUS")) # no longer used
+elif [ -d "../package-macos-release-arm64" ]; then
+MACOS_BINARY_STATUS=$(cd ../package-macos-release-arm64; (source pkgdata.txt; echo "$JOB_STATUS"))
+elif [ -d "../package-macos-release-x86_64" ]; then
+MACOS_BINARY_STATUS="arm64-failure"
 elif [ "$SKIP_BINARIES" ]; then
 MACOS_BINARY_STATUS="skipped"
 else
 MACOS_BINARY_STATUS="none"
 fi
+
 if [ -d "../package-windows-devel" ]; then
 WINDOWS_DEVEL_STATUS=$(cd ../package-windows-devel; (source pkgdata.txt; echo "$JOB_STATUS"))
 elif [ "$SKIP_BINARIES" ]; then
@@ -73,6 +79,7 @@ WINDOWS_DEVEL_STATUS="skipped"
 else
 WINDOWS_DEVEL_STATUS="none"
 fi
+
 if [ -d "../package-windows-release" ]; then
 WINDOWS_BINARY_STATUS=$(cd ../package-windows-release; (source pkgdata.txt; echo "$JOB_STATUS"))
 elif [ "$SKIP_BINARIES" ]; then
@@ -80,24 +87,19 @@ WINDOWS_BINARY_STATUS="skipped"
 else
 WINDOWS_BINARY_STATUS="none"
 fi
+
 if [ -d "../package-linux-devel" ]; then
 LINUX_DEVEL_STATUS=$(cd ../package-linux-devel; (source pkgdata.txt; echo "$JOB_STATUS"))
 else
 LINUX_DEVEL_STATUS="none"
 fi
+
 if [ -d "../package-wasm-release" ]; then
 WASM_BINARY_STATUS=$(cd ../package-wasm-release; (source pkgdata.txt; echo "$JOB_STATUS"))
 else
 WASM_BINARY_STATUS="none"
 fi
-fi
 
-# Override status for missing cross binaries
-if [ "$PKGTYPE" == "src" ] && [ -d "../package-macos-release" ] && [ ! -d "../package-macos-release-arm64" ]; then
-if tar -xOf ../package-macos-release/${PACKAGE}_*.tgz "${PACKAGE}/DESCRIPTION" | grep -q '^Built.*x86_64'; then
-echo "Package is missing arm64 macos binary!"
-MACOS_BINARY_STATUS="arm64-failure"
-fi
 fi
 
 upload_package_file(){
