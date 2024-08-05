@@ -17,6 +17,13 @@ ls -lR
 #   echo "::endgroup::"
 # }
 
+# Submit system failures as well, such that they get retried
+if [ ! -d "package-source" ]; then
+echo "No source package exists? Could be a systsem failure in GitHub Actions."
+TARGET=failure /deploy.sh
+exit 1
+fi
+
 # Upload source first
 mv package-source package-00source
 
