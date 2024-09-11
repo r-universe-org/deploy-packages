@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Temporary solution to not reupload old source packges
+# TODO: actually compare $STOREDATE to date here
+if [ -z "$STOREDATE" ]; then
+	echo "Skipping redeploy of old file"; exit 0
+fi
+
 if [ -z "$COMMITINFO" ]; then
 	echo "Missing COMMITINFO"; exit 1
 fi
@@ -56,20 +62,6 @@ else
 	echo "ERROR: file $FILE not found!"
 	exit 1
 fi
-
-# Temporary solution to not reupload old source packges
-if [ "$PKGTYPE" == "src" ]; then
-tar xf "${FILE}" "${PACKAGE}/DESCRIPTION"
-BUILDDATE=$(grep -oh 'Packaged: [0-9-]*'  -i "${PACKAGE}/DESCRIPTION" | grep -o '[0-9-]*')
-rm -f "${PACKAGE}/DESCRIPTION"
-month=$(echo $BUILDDATE | cut -f2 -d-)
-day=$(echo $BUILDDATE | cut -f3 -d-)
-if [ "$month" -lt "9" ] || [ "$day" -lt "9" ]; then
-	echo "Skipping redeploy of source package from $BUILDDATE"
-	exit 0
-fi
-fi
-## End of temporary solution
 
 # Add status for binaries to source deploy
 if [ "$PKGTYPE" == "src" ]; then
