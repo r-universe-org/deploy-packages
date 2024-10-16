@@ -56,8 +56,8 @@ if [ "$PKGTYPE" == "failure" ]; then
 fi
 
 if [ -f "$FILE" ]; then
-	MD5SUM=$(openssl dgst -md5 $FILE | awk '{print $2}')
-	echo "Deploying: $FILE with md5: $MD5SUM"
+	SHASUM=$(openssl dgst -sha256 $FILE | awk '{print $2}')
+	echo "Deploying: $FILE with sha: $SHASUM"
 else
 	echo "ERROR: file $FILE not found!"
 	exit 1
@@ -127,7 +127,7 @@ upload_package_file(){
 		-H "Builder-Windevel: ${WINDOWS_DEVEL_STATUS}" \
 		-H "Builder-Buildurl: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
 		-H 'Expect:' \
-		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${MD5SUM}" &&\
+		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${SHASUM}" &&\
   echo " === Complete! === " &&\
   exit 0
 }
