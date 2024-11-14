@@ -40,7 +40,7 @@ case "${TARGET}" in
 	;;
 esac
 
-FORCE_SERVER_IP="--resolve *:443:68.183.102.165"
+#FORCE_SERVER_IP="--resolve *:443:68.183.102.165"
 
 if [ "$PKGTYPE" == "failure" ]; then
   echo "Posting a build-failure for $PACKAGE to the package server!"
