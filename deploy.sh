@@ -40,10 +40,12 @@ case "${TARGET}" in
 	;;
 esac
 
+FORCE_SERVER_IP="--resolve *:443:68.183.102.165"
+
 if [ "$PKGTYPE" == "failure" ]; then
   echo "Posting a build-failure for $PACKAGE to the package server!"
   echo "MAINTAINERINFO: $MAINTAINERINFO"
-	curl --max-time 60 --retry 3 -vL --fail-with-body -u "${CRANLIKEPWD}" \
+	curl $FORCE_SERVER_IP --max-time 60 --retry 3 -vL --fail-with-body -u "${CRANLIKEPWD}" \
 		-d "Builder-Upstream=${REPO_URL}" \
 		-d "Builder-Registered=${REPO_REGISTERED}" \
 		-d "Builder-Commit=${COMMITINFO}" \
@@ -109,7 +111,7 @@ fi
 fi
 
 upload_package_file(){
-	curl --max-time 60 --retry 3 -L --upload-file "${FILE}" --fail-with-body -u "${CRANLIKEPWD}" \
+	curl $FORCE_SERVER_IP --max-time 60 --retry 3 -L --upload-file "${FILE}" --fail-with-body -u "${CRANLIKEPWD}" \
 		-H "Builder-Upstream: ${REPO_URL}" \
 		-H "Builder-Registered: ${REPO_REGISTERED}" \
 		-H "Builder-Commit: ${COMMITINFO}" \
