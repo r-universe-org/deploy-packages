@@ -13,6 +13,9 @@ fi
 if [ -z "$MAINTAINERINFO" ]; then
 	echo "Missing MAINTAINERINFO"; exit 1
 fi
+if [ -z "$UNIVERSE_NAME" ]; then
+	echo "Missing UNIVERSE_NAME"; exit 1
+fi
 
 # What are we deploying
 case "${TARGET}" in
@@ -40,6 +43,8 @@ case "${TARGET}" in
 	;;
 esac
 
+SERVERURL="https://${UNIVERSE_NAME}.r-universe.dev/api/packages/${PACKAGE}/${VERSION}/${PKGTYPE}"
+
 #FORCE_SERVER_IP="--resolve *:443:68.183.102.165"
 
 if [ "$PKGTYPE" == "failure" ]; then
@@ -53,7 +58,7 @@ if [ "$PKGTYPE" == "failure" ]; then
 		-d "Builder-Distro=${DISTRO}" \
 		-d "Builder-Host=GitHub-Actions" \
 		-d "Builder-Buildurl=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
-		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}"
+		"${SERVERURL}"
 	exit 0;
 fi
 
@@ -111,6 +116,7 @@ fi
 fi
 
 upload_package_file(){
+	echo "Submitting ${SERVERURL}/${SHASUM}"
 	curl $FORCE_SERVER_IP --max-time 60 --retry 3 -L --upload-file "${FILE}" --fail-with-body -u "${CRANLIKEPWD}" \
 		-H "Builder-Upstream: ${REPO_URL}" \
 		-H "Builder-Registered: ${REPO_REGISTERED}" \
@@ -129,7 +135,7 @@ upload_package_file(){
 		-H "Builder-Windevel: ${WINDOWS_DEVEL_STATUS}" \
 		-H "Builder-Buildurl: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
 		-H 'Expect:' \
-		"${CRANLIKEURL}/${PACKAGE}/${VERSION}/${PKGTYPE}/${SHASUM}" &&\
+		"${SERVERURL}/${SHASUM}" &&\
   echo " === Complete! === " &&\
   exit 0
 }
